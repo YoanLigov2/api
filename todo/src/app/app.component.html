@@ -1,0 +1,40 @@
+<div class="stock-search-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Въведете символ на акция</mat-label>
+    <input matInput [(ngModel)]="symbol" placeholder="Например AAPL" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="fetchStockInfo()">Търсене</button>
+</div>
+
+<div *ngIf="stockInfo">
+  <h2>Информация за {{ stockInfo.name }}</h2>
+  <table mat-table [dataSource]="[stockInfo]" class="mat-elevation-z8">
+    <ng-container matColumnDef="ticker">
+      <th mat-header-cell *matHeaderCellDef> Символ </th>
+      <td mat-cell *matCellDef="let element"> {{element.ticker}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Име </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="exchange">
+      <th mat-header-cell *matHeaderCellDef> Борса </th>
+      <td mat-cell *matCellDef="let element"> {{element.exchange}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="industry">
+      <th mat-header-cell *matHeaderCellDef> Отрасъл </th>
+      <td mat-cell *matCellDef="let element"> {{element.finnhubIndustry}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="marketCapitalization">
+      <th mat-header-cell *matHeaderCellDef> Пазарна Капитализация </th>
+      <td mat-cell *matCellDef="let element"> {{element.marketCapitalization | number}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
